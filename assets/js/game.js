@@ -15,7 +15,7 @@ var enemyHealth = 50;
 var enemyAttack = 12;
 
 var fightskip = ["FIGHT","SKIP"];
-var shopchoice = ["REPAIR","UPGRADE","LEAVE"];
+
 
 
 
@@ -65,45 +65,48 @@ var fight = function(enemyName) {
 };
 
 var shop= function(){
-    do{
-        var promptShop = window.prompt("Welcome to the shop! Are you here for REPAIRs? Or do you wanna UPGRADE your robot for extra firepower?\nPlease enter one: 'REPAIR', 'UPGRADE', 'LEAVE'").toUpperCase();
 
-        if(!(shopchoice.includes(promptShop))){
-            window.alert("Please enter a valid response, 'REPAIR', 'UPGRADE', or 'LEAVE'.")
-        }
-    } while(!(shopchoice.includes(promptShop)) )
-    if(promptShop==="REPAIR"){
-        if(window.confirm("You wanna get your 'bot back to 100%? Sure thing kid, that'll be about 10 gold, how's that sound?")){
-            if(playerMoney<10){
-                window.alert("Sorry kid, I ain't runnin' no charity business. Come back when you've actually got some money to spend. You'll have to make due with whatcha got.");
+    var promptShop = window.prompt("Welcome to the shop! Are you here for REPAIRs? Or do you wanna UPGRADE your robot for extra firepower?\nPlease enter one: 'REPAIR', 'UPGRADE', 'LEAVE'").toUpperCase();
+    switch(promptShop){
+        case "REPAIR":
+            if(window.confirm("You wanna give your 'bot some time in the repair bay? Sure thing kid, that'll be about 7 gold, how's that sound?")){
+                if(playerMoney<10){
+                    window.alert("Sorry kid, I ain't runnin' no charity business. Come back when you've actually got some money to spend. You'll have to make due with whatcha got.");
+                }
+                else{
+                    playerHealth+=20;
+                    playerMoney-=7;
+                    window.alert("There ya go kid, she should be runnin' a little better now. Try to make it back in one piece yeah?");
+                }
             }
             else{
-                playerHealth=100;
-                playerMoney-=10;
-                window.alert("There ya go kid, good as new with a fresh coat of paint. Try not to get any scratches on it yeah?");
+                shop();
+                break;
             }
-        }
-        else{
-            shop();
-        }
-    }
-    else if(promptShop==="UPGRADE"){
-        if(window.confirm("Bigger guns? That's what i'm talkin' about! I got missiles, lasers, flamethrowers, you name it, i got it all for 10 gold. Er, you're not a cop right?")){
-            if(playerMoney<10){
-                window.alert("Sorry kid, I ain't runnin' no charity business. Come back when you've actually got some money to spend. You'll have to make due with whatcha got.");
+            break;
+        case "UPGRADE":
+            if(window.confirm("Bigger guns? That's what i'm talkin' about! I got missiles, lasers, flamethrowers, you name it, i got it all for 7 gold. Er, you're not a cop right?")){
+                if(playerMoney<7){
+                    window.alert("Sorry kid, I ain't runnin' no charity business. Come back when you've actually got some money to spend. You'll have to make due with whatcha got.");
+                }
+                else{
+                    playerAttack+=6;
+                    playerMoney-=7;
+                    window.alert("Alright kid, got 'er all hooked up and ready to rumble. Go melt some faces.");
+                }
             }
             else{
-                playerAttack+=2;
-                playerMoney-=10;
-                window.alert("Alright kid, got 'er all hooked up and ready to rumble. Go melt some faces.");
+                shop();
+                break;
             }
-        }
-        else{
+            break;
+        case "LEAVE":
+            window.alert("Alright then, see you round kid. I'm rootin' for ya.");
+            break;
+        default:
+            window.alert("Sorry kid, what was that? I didn't understand you.");
             shop();
-        }
-    }
-    else{
-        window.alert("Alright then, see you round kid. I'm rootin' for ya.")
+            break;
     }
 };
 
@@ -137,10 +140,12 @@ var startGame = function(){
         var currentEnemy = enemies[i]
         enemyHealth=50;
         fight(currentEnemy);
-        if(playerHealth < 0){
-            break;
+        if(i+1 < enemies.length && playerHealth < 0){
+            if(window.confirm("Hey kid, over here! Pockets feelin' a little heavy? Why don't you come on down to my shop and see if there's anything you like?")){
+                shop();
+            }
+            
         }
-        shop();
     }
     endGame();
 };
