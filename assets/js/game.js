@@ -1,17 +1,24 @@
+/*
+Game States
+    WIN - Player robot has defeated all enemy-robots
+        * Fight all enemy-robots
+        * Defeat each enemy-robot
+    LOSE - Plaer robot's health is zero or less
+*/
 var playerName = window.prompt("What is your robot's name?");
 var playerHealth = 100;
 var playerAttack = 10;
 var playerMoney = 10;
 
-console.log(playerName,playerHealth,playerAttack);
 
 var fightskip = ["FIGHT","SKIP"]
 
-var enemyName = "Kiryu";
+var enemies = ["Kiryu", "XJ-9", "Megas XLR", "Mecha Nicol Bolas", "Standard Microwave"]
+// var enemyName = enemies.pop();
 var enemyHealth = 50;
 var enemyAttack = 12;
 
-var fight = function() {
+var fight = function(enemyName) {
     window.alert("Welcome to Robot Gladiators!");
     do{
         var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.").toUpperCase();
@@ -41,6 +48,7 @@ var fight = function() {
     else{
         if(window.confirm("Are you sure you want to back out? There is a 2 gold penalty.")){
             window.alert(`${playerName} has chosen to skip this fight.`); // coward.
+            playerMoney-=2;
         }
         else{
             fight();
@@ -50,4 +58,7 @@ var fight = function() {
 
 };
 
-fight();
+for(var i =0; i<enemies.length; i++){
+    fight(enemies[i]);
+}
+// fight();
