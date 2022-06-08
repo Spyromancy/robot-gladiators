@@ -47,7 +47,6 @@ var fight = function(enemyName) {
             else {
                 window.alert(`${playerName} takes the blow and has ${playerHealth} left`);
             }
-            console.log("enemy health: " + enemyHealth, "\nplayer health: " + playerHealth);
         }
         else{
             if(window.confirm("Are you sure you want to back out? There is a 10 gold penalty.")){
@@ -74,7 +73,7 @@ var shop= function(){
                     window.alert("Sorry kid, I ain't runnin' no charity business. Come back when you've actually got some money to spend. You'll have to make due with whatcha got.");
                 }
                 else{
-                    playerHealth+=20;
+                    playerHealth+=30;
                     playerMoney-=7;
                     window.alert("There ya go kid, she should be runnin' a little better now. Try to make it back in one piece yeah?");
                 }
@@ -124,7 +123,9 @@ var endGame = function(){
         window.alert("Thank you so much for to playing my game.")
     }
 };
-
+var randomHealth = function(){
+    value = Math.floor(Math.random()*21)+40
+}
 var startGame = function(){
     playerHealth = 100;
     playerAttack = 10;
@@ -138,7 +139,7 @@ var startGame = function(){
             break;
         }
         var currentEnemy = enemies[i]
-        enemyHealth=50;
+        enemyHealth=40+Math.floor(math.random()*21);
         fight(currentEnemy);
         if(i+1 < enemies.length && playerHealth < 0){
             if(window.confirm("Hey kid, over here! Pockets feelin' a little heavy? Why don't you come on down to my shop and see if there's anything you like?")){
